@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.hulei</groupId>
+        <artifactId>common</artifactId>
+        <version>1.0.0.5-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>common-utils</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+
+        <!-- ===================================================== -->
+        <!--                         日志框架                        -->
+        <!-- ===================================================== -->
+        <!-- slf4j+log4j2 -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+        </dependency>
+
+
+        <!-- ===================================================== -->
+        <!--                        JavaEE 规范                     -->
+        <!-- ===================================================== -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+
+
+
+        <!-- ===================================================== -->
+        <!--                        开源工具包                       -->
+        <!-- ===================================================== -->
+        <!--commons-lang3是Apache的Jakarta commons工程下具有一系列公共基础类。-->
+        <!--Lang组件主要是一些工具类，涉及到数组工具类，字符串工具类，字符工具类，数学方面，时间日期工具类，异常，事件等工具类。-->
+        <!--例如StringUtils-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <!-- MOCK数据生成包 -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

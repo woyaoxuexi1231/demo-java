@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>common</artifactId>
+        <groupId>org.hulei</groupId>
+        <version>1.0.0.5-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>common-autoconfigure-starter</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+
+
+        <!-- ===================================================== -->
+        <!--                        内部依赖                        -->
+        <!-- ===================================================== -->
+        <dependency>
+            <groupId>org.hulei</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--curator这里作为可选模块-->
+        <dependency>
+            <groupId>org.hulei</groupId>
+            <artifactId>common-curator-starter</artifactId>
+            <version>${project.version}</version>
+            <optional>true</optional>
+        </dependency>
+
+
+        <!-- ===================================================== -->
+        <!--                       SpringBoot                      -->
+        <!-- ===================================================== -->
+        <!-- 只提供自动配置、日志、和读取yml的能力 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!-- 暴露健康状态 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- spring-boot-configuration-processor 是 Spring Boot 的注解处理器，主要用于生成配置元数据，提供更好的 IDE 支持。 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+
+        <!-- ===================================================== -->
+        <!--                         微服务                         -->
+        <!-- ===================================================== -->
+        <!-- 方便测试、引入eureka客户端起步依赖 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
+
+        <!-- ===================================================== -->
+        <!--                        开源框架                        -->
+        <!-- ===================================================== -->
+        <!-- SpringDoc 是 Spring Boot 的 OpenAPI 3 文档生成工具，Swagger 的替代方案。 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        </dependency>
+        <!-- Knife4j 是中国开发者开发的 Swagger UI 增强工具，基于 SpringDoc 或 Swagger。 -->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
+        </dependency>
+
+
+
+    </dependencies>
+</project>
