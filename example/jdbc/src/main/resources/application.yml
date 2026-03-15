@@ -1,0 +1,13 @@
+server:
+  port: 0
+
+spring:
+  profiles:
+    active: eureka
+  application:
+    name: jdbc
+  # 数据源
+  datasource:
+    url: jdbc:mysql://192.168.2.102:3306/test?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&serverTimezone=Asia/Shanghai&connectionCollation=utf8mb4&rewriteBatchedStatements=true&allowMultiQueries=true&useCursorFetch=true
+    username: root
+    password: 123456

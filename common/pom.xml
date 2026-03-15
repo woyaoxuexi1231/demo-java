@@ -18,7 +18,6 @@
         <module>common-entity-mybatis-plus</module>
         <module>common-autoconfigure-starter</module>
         <module>common-curator-starter</module>
-        <module>common-entity-jpa-starter</module>
         <module>common-entity-mybatis-plus-starter</module>
     </modules>
 

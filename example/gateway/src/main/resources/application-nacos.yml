@@ -1,0 +1,22 @@
+spring:
+  cloud:
+    nacos:
+      username: nacos
+      password: nacos
+      discovery:
+        server-addr: 192.168.2.102:8848
+        namespace: dev
+    gateway:
+      discovery:
+        locator:
+          enabled: true     # 启用基于服务发现的路由
+          lower-case-service-id: true  # 服务名小写匹配
+      routes: []  # 无需手动配置路由
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+

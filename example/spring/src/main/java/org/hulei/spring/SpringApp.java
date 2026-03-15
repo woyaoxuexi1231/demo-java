@@ -7,6 +7,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -24,8 +25,9 @@ public class SpringApp implements ApplicationRunner {
     public static ApplicationContext applicationContext;
 
     public static void main(String[] args) {
+
         // System.setProperty("cglib.debugLocation","C:\\Project\\study-demo\\demo-spring\\demo-springboot\\target\\classes");
-        // spring.profiles.active 这个配置会激活外部jar包内的配置文件
+
         /*
         Spring Boot内嵌 Tomcat 的实现原理主要涉及以下几个步骤
         1. 添加依赖: 在Spring Boot 项目中, 我们通常会添加 spring-boot-starter-web 这个 starter, 它在 pom.xml 中包含了一些依赖, 包括 web、webmvc、tomcat 等
@@ -35,48 +37,10 @@ public class SpringApp implements ApplicationRunner {
         4. 启动 Tomcat: 在创建WebServer的过程中, Spring Boot 会根据你的 classpath 和你定义的配置来决定使用哪种 Servlet 容器(默认是Tomcat), 然后实例化这个容器, 并将其封装在一个 WebServer 接口的实现类中
            总的来说, Spring Boot内嵌 Tomcat 的过程实际上并不复杂, 就是在刷新 Spring 上下文的过程中将 Tomcat容器启动起来, 并且将当前应用绑定到一个 Context, 然后添加到 Host
          */
-
-
         applicationContext = SpringApplication.run(SpringApp.class);
 
-        // Open the homepage URL in default browser
-        String welcome = applicationContext.getEnvironment().getProperty("greeting.welcome");
-        log.info("  {}", welcome);
-
         // applicationContext.publishEvent(new MyApplicationReadyEvent("容器启动完成!"));
-        /*
-        内存参数 -Xmx40m -Xms40m
-        启动报错: java.lang.OutOfMemoryError: GC overhead limit exceeded, 分配的内存太小,不停的GC来创建新的对象然而GC又回收不了对象就导致报错
 
-        -XX:+PrintCommandLineFlags 可以打印JVM 启动时所有的命令行参数，包括默认值和用户自定义的
-        启动之后可以使用 jps -l 或 jmap -heap <pid> | grep GC 来查看使用的 GC
-
-        -XX:+UseG1GC 开启G1垃圾收集器
-
-        -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintGCCause -XX:+PrintGCTimeStamps -XX:+PrintHeapAtGC -XX:+UseG1GC
-
-        jps 列出所有Java进程
-        jstat gc,gc内存相关
-        jstack 栈相关,可以排查死锁问题
-        -l 长列表模式,显示有关锁的附加信息,如果线程持有某些锁或等待于,或阻塞于某些对象,日志会显示
-        jmap 看堆内存,比jstat详细多了,而且可读性更好
-        -heap
-        -dump
-        jinfo 主要查看jvm启动时的参数使用
-        jconsole 我这里linux打不开,在windows本地启动jconsole来玩,需要在linux启动Java程序的时候加上参数
-                nohup java -Djava.rmi.server.hostname=192.168.3.102 -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=3214 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -jar springboot.jar &
-                然后本地的jconsole使用3214这个端口就可以连接上了
-        jhat 主要的作用就是分析jmap导出的dump日志,非常详细,还可以看对象被谁引用
-
-        对比jstack和idea自带的thread dump分析,以及arthas的线程dump分析,后两者更加详细,类似 org.hulei.jdk.root.juc.ReentrantLockTest的情况会详细显示出Lock被谁持有,而jstack是不行的
-        "main" Id=1 WAITING on java.util.concurrent.locks.ReentrantLock$NonfairSync@74dff038 owned by "reentrantLock-test-thread" Id=24
-        at sun.misc.Unsafe.park(Native Method)
-        ...
-        通过jstack要得到这个结果比较麻烦,首先需要jmap导出一份dump文件,通过jstack中持有的对象地址去dump文件中找到那个lock对象,再从NonfairSync@74dff038这个对象的exclusiveOwnerThread变量来确定是哪个线程目前持有这个对象
-
-        我这里虚拟机的内存是 3GB,1核心,打包这个项目之后在虚拟机上面跑发现cpu直接99%,下不来
-        直接 top -H -p <pid> 可以查看这个进程内部占用cpu的线程是谁
-         */
     }
 
     @Override

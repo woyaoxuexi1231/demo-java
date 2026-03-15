@@ -1,5 +1,6 @@
 package org.hulei.entity.jpa.pojo;
 
+import com.github.javafaker.Faker;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +13,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
 @Setter
@@ -70,4 +74,49 @@ public class DemoStockQuote {
     @Column(name = "created_at")
     private Instant createdAt;
 
+    public static DemoStockQuote gen() {
+        Faker faker = new Faker();
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        DemoStockQuote quote = new DemoStockQuote();
+        quote.setCode("STK" + faker.number().digits(4));
+        quote.setName(faker.company().name());
+
+        BigDecimal preClose = BigDecimal.valueOf(random.nextDouble(10.0, 200.0)).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal currentPrice = preClose.multiply(BigDecimal.valueOf(1 + random.nextDouble(-0.1, 0.1)))
+                .setScale(2, RoundingMode.HALF_UP);
+        BigDecimal openPrice = preClose.multiply(BigDecimal.valueOf(1 + random.nextDouble(-0.05, 0.05)))
+                .setScale(2, RoundingMode.HALF_UP);
+
+        BigDecimal maxBase = openPrice.max(currentPrice);
+        BigDecimal minBase = openPrice.min(currentPrice);
+        BigDecimal high = maxBase.multiply(BigDecimal.valueOf(1 + random.nextDouble(0.0, 0.03)))
+                .setScale(2, RoundingMode.HALF_UP);
+        BigDecimal low = minBase.multiply(BigDecimal.valueOf(1 - random.nextDouble(0.0, 0.03)))
+                .setScale(2, RoundingMode.HALF_UP);
+
+        BigDecimal changeAmount = currentPrice.subtract(preClose).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal changePercent = changeAmount.multiply(BigDecimal.valueOf(100))
+                .divide(preClose, 2, RoundingMode.HALF_UP);
+
+        long volume = random.nextLong(10_000L, 5_000_000L);
+        BigDecimal turnover = currentPrice.multiply(BigDecimal.valueOf(volume)).setScale(2, RoundingMode.HALF_UP);
+
+        Instant dataTime = Instant.now().minus(random.nextLong(1, 300), ChronoUnit.SECONDS);
+
+        quote.setCurrentPrice(currentPrice);
+        quote.setChangePercent(changePercent);
+        quote.setChangeAmount(changeAmount);
+        quote.setVolume(volume);
+        quote.setTurnover(turnover);
+        quote.setHigh(high);
+        quote.setLow(low);
+        quote.setOpenPrice(openPrice);
+        quote.setPreClose(preClose);
+        quote.setSource("faker");
+        quote.setDataTime(dataTime);
+        quote.setCreatedAt(Instant.now());
+
+        return quote;
+    }
 }

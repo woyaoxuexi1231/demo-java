@@ -1,0 +1,37 @@
+server:
+  port: 19999
+
+spring:
+  application:
+    name: gateway
+  profiles:
+    active: default-router,security,redis-limit-config,sentinel,eureka
+  main:
+    allow-circular-references: true
+    web-application-type: reactive
+  datasource:
+    url: jdbc:mysql://192.168.2.102:3306/test?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  data:
+    redis:
+      host: 192.168.2.102
+      port: 6379
+      database: 0
+      password: 123456
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    root: info

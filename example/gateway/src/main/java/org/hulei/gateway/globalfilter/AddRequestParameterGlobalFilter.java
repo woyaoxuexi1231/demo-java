@@ -1,0 +1,50 @@
+package org.hulei.gateway.globalfilter;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.factory.AbstractNameValueGatewayFilterFactory;
+import org.springframework.cloud.gateway.filter.factory.AddRequestParameterGatewayFilterFactory;
+import org.springframework.core.Ordered;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Mono;
+
+/**
+ * 这个全局过滤器将会给所有的请求都加上一个请求参数
+ *
+ * @author woaixuexi
+ * @since 2024/4/12 22:33
+ */
+
+@Component
+@Slf4j
+public class AddRequestParameterGlobalFilter implements org.springframework.cloud.gateway.filter.GlobalFilter, Ordered {
+
+    @Autowired
+    AddRequestParameterGatewayFilterFactory addRequestParameterGatewayFilterFactory;
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+
+        log.info("1");
+
+        // 在这里添加参数
+        log.info("{}", exchange.getRequest().getQueryParams());
+
+        AbstractNameValueGatewayFilterFactory.NameValueConfig config = new AbstractNameValueGatewayFilterFactory.NameValueConfig();
+        config.setName("exampleParam");
+        config.setValue("exampleValue");
+
+        // 使用AddRequestParameterFilter添加请求参数
+        GatewayFilter filter = addRequestParameterGatewayFilterFactory.apply(config);
+
+        return filter.filter(exchange, chain);
+    }
+
+    @Override
+    public int getOrder() {
+        return 0;
+    }
+}
